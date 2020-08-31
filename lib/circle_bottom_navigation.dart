@@ -23,6 +23,7 @@ class CircleBottomNavigation extends StatefulWidget {
   final double shadowAllowance;
   final bool hasElevationShadows;
   final double blurShadowRadius;
+  final CircleBottomNavigationController controller;
 
   @override
   final Key key;
@@ -45,6 +46,7 @@ class CircleBottomNavigation extends StatefulWidget {
     this.shadowAllowance = 20.0,
     this.hasElevationShadows = true,
     this.blurShadowRadius = 8.0,
+    this.controller,
   })  : assert(onTabChangedListener != null),
         assert(initialSelection != null),
         assert(tabs != null);
@@ -53,7 +55,8 @@ class CircleBottomNavigation extends StatefulWidget {
   _CircleBottomNavigationState createState() => _CircleBottomNavigationState();
 }
 
-class _CircleBottomNavigationState extends State<CircleBottomNavigation> with TickerProviderStateMixin, RouteAware {
+class _CircleBottomNavigationState extends State<CircleBottomNavigation>
+    with TickerProviderStateMixin, RouteAware {
   IconData nextIcon = Icons.search;
   IconData activeIcon = Icons.search;
 
@@ -76,19 +79,28 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation> with Ti
     activeIcon = widget.tabs[currentSelected].icon;
     activeIconSize = widget.tabs[currentSelected].iconSize ?? 30;
 
-    circleColor =
-        (widget.circleColor == null) ? (Theme.of(context).brightness == Brightness.dark) ? Colors.white : Theme.of(context).primaryColor : widget.circleColor;
+    circleColor = (widget.circleColor == null)
+        ? (Theme.of(context).brightness == Brightness.dark)
+            ? Colors.white
+            : Theme.of(context).primaryColor
+        : widget.circleColor;
 
-    activeIconColor =
-        (widget.activeIconColor == null) ? (Theme.of(context).brightness == Brightness.dark) ? Colors.black54 : Colors.white : widget.activeIconColor;
+    activeIconColor = (widget.activeIconColor == null)
+        ? (Theme.of(context).brightness == Brightness.dark) ? Colors.black54 : Colors.white
+        : widget.activeIconColor;
 
-    barBackgroundColor =
-        (widget.barBackgroundColor == null) ? (Theme.of(context).brightness == Brightness.dark) ? Colors.black54 : Colors.white : widget.barBackgroundColor;
+    barBackgroundColor = (widget.barBackgroundColor == null)
+        ? (Theme.of(context).brightness == Brightness.dark) ? Colors.black54 : Colors.white
+        : widget.barBackgroundColor;
 
-    textColor = (widget.textColor == null) ? (Theme.of(context).brightness == Brightness.dark) ? Colors.white : Colors.black54 : widget.textColor;
+    textColor = (widget.textColor == null)
+        ? (Theme.of(context).brightness == Brightness.dark) ? Colors.white : Colors.black54
+        : widget.textColor;
 
     inactiveIconColor = (widget.inactiveIconColor == null)
-        ? (Theme.of(context).brightness == Brightness.dark) ? Colors.white : Theme.of(context).primaryColor
+        ? (Theme.of(context).brightness == Brightness.dark)
+            ? Colors.white
+            : Theme.of(context).primaryColor
         : widget.inactiveIconColor;
   }
 
@@ -97,6 +109,11 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation> with Ti
     super.initState();
 
     _setSelected(widget.tabs[widget.initialSelection].key);
+    if (widget.controller != null) {
+      widget.controller.setPage = (int page) {
+        setPage(page);
+      };
+    }
   }
 
   void setPage(int page) {
@@ -218,8 +235,10 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation> with Ti
                         alignment: Alignment.center,
                         children: <Widget>[
                           SizedBox(
-                            height: widget.circleSize + widget.circleOutline + widget.shadowAllowance,
-                            width: widget.circleSize + widget.circleOutline + widget.shadowAllowance,
+                            height:
+                                widget.circleSize + widget.circleOutline + widget.shadowAllowance,
+                            width:
+                                widget.circleSize + widget.circleOutline + widget.shadowAllowance,
                             child: ClipRect(
                               clipper: HalfClipper(),
                               child: Container(
@@ -287,4 +306,10 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation> with Ti
           ),
         ],
       );
+}
+
+class CircleBottomNavigationController {
+  Function(int page) setPage;
+
+  CircleBottomNavigationController();
 }

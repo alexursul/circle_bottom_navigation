@@ -247,7 +247,7 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation>
                                     width: widget.circleSize + widget.circleOutline,
                                     height: widget.circleSize + widget.circleOutline,
                                     decoration: BoxDecoration(
-                                      color: color: widget.barBackgroundColor,
+                                      color: widget.barBackgroundColor,
                                       shape: BoxShape.circle,
                                       boxShadow: <BoxShadow>[
                                         BoxShadow(

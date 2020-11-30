@@ -205,7 +205,7 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation>
                       iconSize: tab.iconSize,
                       fontSize: tab.fontSize,
                       fontWeight: tab.fontWeight,
-                      buttonKey: Key('menu_${tab.title.toLowerCase()}'),
+                      buttonKey: Key('menuItem${tab.title}'),
                       callbackFunction: (UniqueKey key) => _callbackFunction(key),
                     ),
                   )
@@ -232,6 +232,7 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation>
                     widthFactor: 1 / widget.tabs.length,
                     child: GestureDetector(
                       onTap: widget.tabs[currentSelected].onClick,
+                      key: Key('menuItem${widget.tabs[currentSelected].title}'),
                       child: Stack(
                         alignment: Alignment.center,
                         children: <Widget>[

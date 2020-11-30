@@ -205,6 +205,7 @@ class _CircleBottomNavigationState extends State<CircleBottomNavigation>
                       iconSize: tab.iconSize,
                       fontSize: tab.fontSize,
                       fontWeight: tab.fontWeight,
+                      buttonKey: Key('menu_${tab.title}'),
                       callbackFunction: (UniqueKey key) => _callbackFunction(key),
                     ),
                   )

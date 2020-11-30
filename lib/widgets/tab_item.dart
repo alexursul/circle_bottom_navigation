@@ -19,6 +19,7 @@ class TabItem extends StatelessWidget {
   final double iconSize;
   final double fontSize;
   final FontWeight fontWeight;
+  final Key buttonKey;
 
   final double iconYAlign = ICON_ON;
   final double textYAlign = TEXT_OFF;
@@ -35,6 +36,7 @@ class TabItem extends StatelessWidget {
     this.iconSize,
     this.fontSize,
     this.fontWeight = FontWeight.w600,
+    this.buttonKey,
   });
 
   @override
@@ -90,6 +92,7 @@ class TabItem extends StatelessWidget {
                   ),
                   opacity: selected ? ALPHA_OFF : ALPHA_ON,
                   child: IconButton(
+                    key: buttonKey,
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     padding: const EdgeInsets.all(
